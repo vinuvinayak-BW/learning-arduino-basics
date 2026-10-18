@@ -1,0 +1,30 @@
+int ledState = 0;
+int ledPin = 8;
+int buttonPin = 12;
+int buttonNew;
+int buttonOld = 1;
+int delayTime = 100;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
+}
+
+void loop() {
+  buttonNew = digitalRead(buttonPin);
+
+  // Detect transition from 0 (pressed) to 1 (released)
+  if (buttonOld == 0 && buttonNew == 1) {
+    if (ledState == 0) {
+      digitalWrite(ledPin, HIGH);
+      ledState = 1;
+    } else {
+      digitalWrite(ledPin, LOW);
+      ledState = 0;
+    }
+  }
+
+  buttonOld = buttonNew;
+  delay(delayTime);
+}
